@@ -1,20 +1,20 @@
 # Project-Team-4
                                             PROJECT IDEA SUBMISSION
-Presented to :
+##Presented to :
 --------------
-Professor Rakesh Ranjan
+#### Professor Rakesh Ranjan
 
-Presented By:
+## Presented By:
 --------------
-Arihant Sai (SJSU ID: 013704652)
-M.S Srinivas (SJSU ID: 013704652)
-Sayali Patil (SJSU ID: 013704652)
+*Arihant Sai (SJSU ID: 013592150)
+M.S Srinivas (SJSU ID: 013726401)
+Sayali Patil (SJSU ID: 013530439)
 Surabhi Sinha (SJSU ID: 013704652)
-
+*
                                                       
-1. SJSU Safe Ride Tracking App
+## 1.SJSU Safe Ride Tracking App
 --------------------------------
-Project Abstract:
+#### **Abstract:**
 
 In our SJSU campus, we have Safe Rides that is a shuttle service provided by university to drop
 students and faculties within a specified parameter. To request for those rides we need to call
@@ -26,17 +26,19 @@ proposing an idea to develop a web application,” SJSU Safe ride tracking app�
 This app will facilitate SJSU students and Faculties to track the live location of Safe Rides
 operational in campus. We can also get shuttle driver’s contact number.
 
-For the development of this app, we will be using following technology stack:
+######  Technology stack needed:
 1. UI: React-redux
 2. DB: MongoDB
 3. Backend: Node js
 4. Cloud Hosting: AWS
 5. Messaging: Kafka
 
-2.Alexa App for Old people
+
+
+## 2.Alexa App for Old people
 -----------------------------
 
-Project Abstract:
+#### **Abstract:**
 
 Alexa application as a pharmacy for old age people
 Old people are not good at UI based applications, rather many online applications are not user
@@ -46,13 +48,13 @@ Old people can place an order at a pharmacy for over the counter medicines. Doct
 can be alerted via Alexa. They can also ask Alexa for refill, the date and time of medicine
 consumption.
 
-Technology Stack needed : 
-AWS lambda, NodeJs
+###### Technology Stack needed :
+AWS lambda, NodeJs, ALexa SkillsAWS lambda, NodeJs, ALexa Skills
 
-3. “Gun” detection and location tracking system
+## 3. “Gun" detection and location tracking system
 ---------------------------------------------------
 
-Project Abstract:
+#### **Abstract:**
 
 Mugging is a quotidian word in San Jose, especially in down town area. Moving around in San
 Jose downtown is not safe all the times and could be dangerous because of the Gun Culture in
@@ -62,13 +64,15 @@ system which spiesthe location, detects the model of a “Gun” and alerts with
 captured, details of the person who might be in trouble etc.
 This Application facilitates in safer movement of people in San Jose, reducing risks.
 
-Technologies :
+###### Technology Stack needed :
 MERN Stack, Object Detection model(Gun), Raspberry Pi(spy camera module), AWS or Heroku
 
-4. Dustbin Attending Notifier
+
+
+## 4. Dustbin Capacity Notifier
 -------------------------------
 
-Project Abstract:
+#### **Abstract:**
 
 There are large number of garbage bins in our university. The filling rate of each dustbin varies
 i.e, some gets filled faster than others. This asks for attention because otherwise it can start to
@@ -76,5 +80,5 @@ stink which can cause negative effects on health / inconvenience to the people p
 So, Dustbin project suggests to have sensor attached to each dustbin which in turn will inform
 the municipal management of the university whenever a dustbin needs any attention.
 
-Technology Stack needed :
+###### Technology Stack needed :
 Raspberry PI, IR sensors, Server, Python, MongoDB
