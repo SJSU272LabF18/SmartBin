@@ -2,15 +2,14 @@
                                             PROJECT IDEA SUBMISSION
 ##Presented to :
 --------------
-#### Professor Rakesh Ranjan
+## Professor Rakesh Ranjan
 
 ## Presented By:
 --------------
-*Arihant Sai (SJSU ID: 013592150)
-M.S Srinivas (SJSU ID: 013726401)
-Sayali Patil (SJSU ID: 013530439)
-Surabhi Sinha (SJSU ID: 013704652)
-*
+  # Arihant Sai (SJSU ID: 013592150)
+  # M.S Srinivas (SJSU ID: 013726401)
+  # Sayali Patil (SJSU ID: 013530439)
+  # Surabhi Sinha (SJSU ID: 013704652)
                                                       
 ## 1.SJSU Safe Ride Tracking App
 --------------------------------
@@ -60,7 +59,7 @@ Mugging is a quotidian word in San Jose, especially in down town area. Moving ar
 Jose downtown is not safe all the times and could be dangerous because of the Gun Culture in
 the States. Since SJSU is located in the downtown, students who have late evening classes or odd
 timing classes might have a sense of fear for mugging, life threats etc. So, the idea is to design a
-system which spiesthe location, detects the model of a “Gun” and alerts with the location, image
+system which spies the location, detects the model of a “Gun” and alerts with the location, image
 captured, details of the person who might be in trouble etc.
 This Application facilitates in safer movement of people in San Jose, reducing risks.
 
