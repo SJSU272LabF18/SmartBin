@@ -68,7 +68,8 @@ MERN Stack, Object Detection model(Gun), Raspberry Pi(spy camera module), AWS or
 
 
 
-## 4. Dustbin Capacity Notifier
+## 4. Dustbin Capacity Notifier  - APPROVED
+comment: it should also collect historical data and predict which one fills faster and suggest to replace with bigger one or more. Basically you are optimizing garbage collection and saving money while maintaining hygene. 
 -------------------------------
 
 #### **Abstract:**
