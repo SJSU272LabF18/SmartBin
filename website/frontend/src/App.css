@@ -25,10 +25,13 @@
 }
 .images {
   /* background-image: url('image.jpeg'); */
-  background-blend-mode: darken;
+  background-image:url("https://info.bigbelly.com/hubfs/Bigbelly%20Case%20Study%20-%20City%20of%20Newton%20-%20Photo%20-%201.jpg");
+/* background-blend-mode: darken; */
+/* filter : blur(3px); */
   background-size: cover;
-  filter: blur(3px);
-  background-color: rgba(0,0,0,0.5)
+  height : 900px;
+  
+  /* background-color: rgba(0,0,0,0.5) */
 }
 .App-link {
   color: #61dafb;
