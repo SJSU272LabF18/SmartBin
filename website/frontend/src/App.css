@@ -6,7 +6,13 @@
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
 }
-
+.nav-height {
+  height:66px;
+}
+.logo {
+  min-width: 10px;
+  height : 5px;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -15,9 +21,15 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color:white;
 }
-
+.images {
+  /* background-image: url('image.jpeg'); */
+  background-blend-mode: darken;
+  background-size: cover;
+  filter: blur(3px);
+  background-color: rgba(0,0,0,0.5)
+}
 .App-link {
   color: #61dafb;
 }

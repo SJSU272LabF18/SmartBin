@@ -7,10 +7,14 @@ var cors = require("cors");
 var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 //const multer = require('multer');
+var {mongoose} = require('./db/mongoose');
+//var {Applications} = require('./models/application');
+var {trashcapacities} = require('./models/trashcapacity');
 const url = "http://localhost:3000";
 //const url = "hosting url";
 app.use(cors({ origin: url, credentials: true }));
-var {TrashCapacity} = require('./models/trashcapacity');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function(req, res, next) {
 
     res.setHeader('Access-Control-Allow-Origin', url);
@@ -21,8 +25,7 @@ app.use(function(req, res, next) {
     next();
   });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 //redis client
@@ -31,8 +34,25 @@ app.use(cookieParser());
 //   console.log('connected to redis');
 // })
 
+app.post('/bininfo', function(req, res, next){
 
+    trashcapacities.findOne({_id:req.body.id}).then((app)=> {
+        //console.log("\nNumber of applied jobs: " + app.length + "\n");
+        console.log("result : "+ app.capacity[app.capacity.length-1].height );
+        let maxHeight = app.capacity[app.capacity.length-1].height
+        res.writeHead(200,{
+            'Content-Type' : 'application/json'
+        })
+        res.end(JSON.stringify(maxHeight));
+    }, (err) => {
+        console.log("error : " + err)
+        console.log("inside 400");
+        res.sendStatus(400);
+    
+    }
 
+  );
+});
 var server = app.listen(3001,()=>{
     console.log("Linkedin server has started to listen at http://localhost:3001" );
 });
