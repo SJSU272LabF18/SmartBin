@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 var {trashcapacities} = require('./models/trashcapacity');
 const url = "http://localhost:3000";
 //const url = "hosting url";
-app.use(cors({ origin: url, credentials: false }));
+app.use(cors({ origin: url, credentials: true }));
 
 app.use(function(req, res, next) {
 
@@ -28,8 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/bininfo', function (req,res,next) {
-  console.log("inside get bin trace data",req.body.bin_id);
+app.post('/bininfo/:ID', function (req,res,next) {
+  console.log("inside get bin trace data",req.params.ID);
   var mydate = new Date().toISOString();
   console.log("Value of mydate: ", mydate);
   var d = new Date();
@@ -39,42 +39,14 @@ app.post('/bininfo', function (req,res,next) {
   d.setDate(d.getDate() - 1);
   console.log("Value of d: ", d);
   var datamap = new Map();
-  trashcapacities.find({_id:req.body.bin_id})
+  trashcapacities.find({_id:req.params.ID})
   .exec()
   .then(result => {
     console.log("Response sent after fetching is : ", result[0].capacity);
-    dataset = result[0].capacity;
-    for(var i =3 ; i >=0;i--) {
-      var d1=new Date();
-      d1.setDate(d1.getDate() - i);
-      // console.log("COnverting to ISO string", d1.toISOString());
-      var oldData = d1.toISOString().split('T')[0];
-      console.log("Value of old date:", oldData);
-      var heightSum=0;
-      var count=0;
-      for(var j=0;j<dataset.length;j++) {
-        var datevalue=dataset[j].timestamp;
-        var newdate = datevalue.toString().split('T')[0];
-        console.log("Here I am", newdate);
-        // console.log("Value of all data", oldData);
-        // var data=new Date(dataset[j].timestamp);
-        // console.log("Value of new Date:", data);
-        if(oldData.split('-')[2]==newdate.split('-')[2]) {
-          console.log("Inside if");
-          heightSum+=dataset[j].height;
-          count++;
-          var v = oldData;
-        }
+    res.status(200).json({
+            bindata: result[0].capacity
+          });
 
-      }
-      var finalData=heightSum/count;
-      labelArray.push(finalData);
-      datamap.set(finalData,v);
-    }
-    for (let [key, value] of datamap) {
-        console.log(key + ' ' + value);
-    }
-    res.status(200).json({bindata  : datamap});
   })
     .catch(err => {
       console.log("error while fetching", err);
@@ -105,7 +77,40 @@ app.post('/bininfo', function (req,res,next) {
 //         });
 // });
 });
+app.post('/binheightinfo', function(req, res, next){
 
+    trashcapacities.findOne({_id:req.body.id}).then((app)=> {
+        console.log("\nNumber of applied jobs: " + app);
+        console.log("result : "+ app.capacity[app.capacity.length-1].height );
+        let maxHeight = app.capacity[app.capacity.length-1].height
+        res.writeHead(200,{
+            'Content-Type' : 'application/json'
+        })
+        res.end(JSON.stringify(maxHeight));
+    }, (err) => {
+        console.log("error : " + err)
+        console.log("inside 400");
+        res.sendStatus(400);
+
+    }
+  );
+});
+app.get('/getbins', function(req, res, next){
+      trashcapacities.find()
+      .exec()
+      .then(result => {
+        console.log("Response sent after fetching is : ", result);
+        res.status(200).json({
+                bindata: result
+              });
+
+      })
+        .catch(err => {
+          console.log("error while fetching", err);
+          res.write('');
+          // res.sendStatus(201);
+      })
+  });
 var server = app.listen(3001,()=>{
     console.log("Linkedin server has started to listen at http://localhost:3001" );
 });
