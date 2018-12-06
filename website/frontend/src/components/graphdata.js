@@ -5,6 +5,7 @@ import './applicantprofile.css';
 import BarChart from './barchart';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import { GoogleLogout } from 'react-google-login';
 class GraphData extends Component {
 
   constructor(props) {
@@ -117,10 +118,30 @@ class GraphData extends Component {
 
 
   render() {
-
+    const logout = (response) => {
+      console.log("logout", response);
+     // console.log("token", response.Zi.access_token);
+      localStorage.removeItem('token')
+      // redirectVar = <Redirect to="/about" />
+      //createBrowserHistory.push('/about')
+    }
     return (
             <div>
-
+                <Link to="/about">
+            <img style={{"margin-left":"30px", "margin-top":"20px" }} src="https://img.icons8.com/ios-glyphs/60/000000/delete.png"/></Link>
+            <h1 style={{"margin-left":"390px", "margin-top":"-50px" }}>SMARTBIN CAPACITY NOTIFIER</h1>
+            <h4 style={{"margin-left":"1000px", "margin-top":"-50px"}}><Link to="/aboutme">About</Link></h4> 
+            <h4 style={{"margin-left":"1100px", "margin-top":"-40px"}}><Link to="/binlist">Dashboard</Link></h4>
+            <h4 style={{"margin-left":"1200px", "margin-top":"-40px"}}>{localStorage.getItem("token")}</h4><br/>
+            {/* <h4 style={{"margin-left":"1200px", "margin-top":"-40px"}}>Login</h4><br/><hr/> */}
+            <div style={{"margin-left":"1300px", "margin-top":"-80px"}}>
+            <GoogleLogout
+      buttonText="Logout"
+      onLogoutSuccess={logout}
+    
+    >
+    </GoogleLogout>
+           </div>
                 <div className="header-graph">
                 <h5> Weekly Analysis of Dusbin filling capacity</h5>
                 <div className="graph-display">

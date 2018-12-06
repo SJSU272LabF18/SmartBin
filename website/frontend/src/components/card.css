@@ -1,9 +1,9 @@
 .card-container {
   position: relative;
-  width: 120%;
+  width: 80%;
   margin-left:200px;
   margin-top: 30px;
-
+ 
 }
 .carousel-container{
   width: 935px;
@@ -202,9 +202,7 @@ font-family: Georgia, serif;
   margin-left: 100px;
   width: 1000px;
 }
-tr.row-color: nth-child(even){
-  background-color: #f2f2f2;
-}
+
 .succes-conatiner{
   height:200px;
   width:700px;

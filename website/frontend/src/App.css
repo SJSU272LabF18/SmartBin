@@ -25,9 +25,10 @@
 }
 .images {
   /* background-image: url('image.jpeg'); */
-  background-image:url("https://info.bigbelly.com/hubfs/Bigbelly%20Case%20Study%20-%20City%20of%20Newton%20-%20Photo%20-%201.jpg");
-/* background-blend-mode: darken; */
-/* filter : blur(3px); */
+  /* background-image:url("https://info.bigbelly.com/hubfs/Bigbelly%20Case%20Study%20-%20City%20of%20Newton%20-%20Photo%20-%201.jpg"); */
+  background-image:url("https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80");
+  background-blend-mode: darken; 
+ 
   background-size: cover;
   height : 900px;
   

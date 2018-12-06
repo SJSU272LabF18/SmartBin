@@ -16,9 +16,9 @@ class Card extends Component {
     return(
           <div className="card-container">
             <div className='bg-light-orange dib br3 pa3 ma2 grow bw2 shadow-5'>
-                <img className="logo" alt = "home" src= {Images.retrievePropertyImages((parseInt(Math.random()*100)%4).toString())} />
+                {/* <img className="logo" alt = "home" src= {Images.retrievePropertyImages((parseInt(Math.random()*100)%4).toString())} /> */}
               <div className="card-data">
-                <Link to={{ pathname: "/graphdata", state: this.props.bin._id }}><p className="para-description" >Bin ID is : {this.props.bin._id} </p></Link>
+                <Link to={{ pathname: "/graphdata", state: this.props.bin._id }}><p className="para-description " >Bin ID : {this.props.bin._id} </p></Link>
                 <table className="card-data">
                   <tr>
                     <td> <h4 className="bold-heading-1"> Last Noted Height of the dustbin  : {this.props.bin.capacity[this.props.bin.capacity.length-1].height}</h4></td>
