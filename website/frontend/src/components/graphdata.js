@@ -15,19 +15,21 @@ class GraphData extends Component {
 
     this.state={
       datamap1:null,
+      datamap2:null,
       flag:false,
       bin_id:"5c077d7be7179a6ca082a5c0"
     }
     this.parseData = this.parseData.bind(this);
     // this.getAdminDashBoardGraph = this.getAdminDashBoardGraph.bind(this);
   }
-
+  //5bfeef7033a5340fd7215b7a
+//
   componentDidMount() {
     const value={
-      id : "5c077d7be7179a6ca082a5c0"
+      id : "5bfeef7033a5340fd7215b7a"
     }
       let ID = this.props._id;
-      axios.post(`http://localhost:3001/bininfo/`+"5c077d7be7179a6ca082a5c0")
+      axios.post(`http://localhost:3001/bininfo/`+"5bfeef7033a5340fd7215b7a")
         .then((response) => {
         if(response.status == 200)
         {
@@ -40,48 +42,25 @@ class GraphData extends Component {
             alert("Something went wrong!!")
         }
     })
-
-    axios.post(`http://localhost:3001/binheightinfo/`, value)
-      .then((response) => {
-          console.log("bin data response : ", response.data);
-          this.heightValue = response.data;
-          this.setState({
-            flag:true
-          })
-          var heightArray=new Array();
-          heightArray.push(0);
-          heightArray.push(0);
-          heightArray.push(0);
-          heightArray.push(0);
-          heightArray.push(0);
-          heightArray.push(this.heightValue);
-          var labels = [1,2,3,4,5,6]
-            var data={
-              labels: labels,
-              datasets:heightArray,
-              labelName:"Max Height",
-              header_text:"Bin info"
-             }
-          return (<BarChart className="mychart" data={data}/>)
-        })
   }
   parseData(){
     var labelArray = new Array();
     var datamap = new Map();
     var dataset = this.displayValue;
-    for(var i =3 ; i >=0;i--) {
+    for(var i =2 ; i >=0;i--) {
       var d1=new Date();
       d1.setDate(d1.getDate() - i);
       var oldData = d1.toISOString().split('T')[0];
-      console.log("Value of old date:", oldData);
+      var firstTime = d1.toISOString().split('T')[1];
+      // console.log("Value of old date:", oldData);
       var heightSum=0;
       var count=0;
       for(var j=0;j<dataset.length;j++) {
         var datevalue=dataset[j].timestamp;
         var newdate = datevalue.toString().split('T')[0];
-        console.log("Here I am", newdate);
+        // console.log("Here I am", newdate);
         if(oldData.split('-')[2]==newdate.split('-')[2]) {
-          console.log("Inside if");
+          // console.log("Inside if");
           heightSum+=dataset[j].height;
           count++;
           var v = oldData;
@@ -95,9 +74,9 @@ class GraphData extends Component {
         this.state.datamap1 = datamap;
         var labels = new Array();
         var datasets = new Array();
-        for(let [key, value] of this.state.datamap1) {
-          console.log("Key : " +key +"value: " +value);
-        }
+        // for(let [key, value] of this.state.datamap1) {
+        //   console.log("Key : " +key +"value: " +value);
+        // }
         for(let [key, value] of this.state.datamap1) {
           labels.push(value);
           datasets.push(key);
@@ -108,6 +87,74 @@ class GraphData extends Component {
         labels: labels,
         datasets:datasets,
         labelName:"Mean Height Per Day",
+        header_text:"Bin info"
+       }
+    return (<BarChart data={data}/>)
+    }else{
+      return (<h2 style={{color:"red"}}> Analysis data not available </h2>)
+}
+  }
+  parseDataForHeight(){
+    var d1=new Date();
+    var arrayvalue = new Array();
+    var oldData = d1.toISOString().split('T')[0];
+    var firstTime = oldData.split(':')[0];
+    var labelArray = new Array();
+    var datamap = new Map();
+    var dataset = this.displayValue;
+    var prevMaxHeight = 0;
+    for(var j=0;j<dataset.length;j++) {
+      var datevalue=dataset[j].timestamp;
+      var newdate = datevalue.toString().split('T')[0];
+      // console.log("new date obtained : ",newdate);
+      if(newdate.split('-')[2] == oldData.split('-')[2]) {
+        // console.log("data value obtained : ",datevalue);
+        var newdate1 = dataset[j].timestamp.toString().split('T')[1];
+
+        var firstTimeDataset = newdate1.split(':')[0];
+
+          // console.log("Time obtained :", parseInt(firstTimeDataset));
+        if(parseInt(firstTimeDataset)>=1 && parseInt(firstTimeDataset)<=11) {
+          if(dataset[j].height > prevMaxHeight) {
+            prevMaxHeight = dataset[j].height
+            arrayvalue[0] = prevMaxHeight;
+
+          }
+        }
+        else if(parseInt(firstTimeDataset)>=13 && parseInt(firstTimeDataset)<=19) {
+          if(dataset[j].height > prevMaxHeight) {
+            prevMaxHeight = dataset[j].height
+            arrayvalue[1] = prevMaxHeight;
+          }
+        }
+        else if (parseInt(firstTimeDataset)>=19 && parseInt(firstTimeDataset)<=23){
+          if(dataset[j].height > prevMaxHeight) {
+            prevMaxHeight = dataset[j].height
+            arrayvalue[2] = prevMaxHeight;
+          }
+        }
+    }
+    }
+      datamap.set(arrayvalue[0],"Morning");
+      console.log("day time height: ",arrayvalue[1])
+      datamap.set(arrayvalue[1],"Noon");
+      datamap.set(arrayvalue[2],"Evening");
+        this.state.datamap2 = datamap;
+        var labels = new Array();
+        var datasets = new Array();
+        // for(let [key, value] of this.state.datamap2) {
+        //   console.log("Key : " +key +"value: " +value);
+        // }
+        for(let [key, value] of this.state.datamap2) {
+          labels.push(value);
+          datasets.push(key);
+        }
+
+    if(this.state.datamap2.size >0){
+      var data={
+        labels: labels,
+        datasets:datasets,
+        labelName:"Maximum Height during daytime,noon,evening",
         header_text:"Bin info"
        }
     return (<BarChart data={data}/>)
@@ -148,9 +195,8 @@ class GraphData extends Component {
                   <div className='bg-light-orange dib br1 pa1 ma1 bw1 shadow-1'>
                       <div className="car-graph-3">
                       {this.state.flag==false?'':this.parseData()}
+                      {this.state.flag==false?'':this.parseDataForHeight()}
                       </div>
-
-
                   </div>
                 </div>
                 </div>
