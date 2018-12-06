@@ -28,8 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/bininfo/:ID', function (req,res,next) {
-  console.log("inside get bin trace data",req.params.ID);
+app.post('/bininfo/:ID1', function (req,res,next) {
+  console.log("inside get bin trace data",req.params.ID1);
   var mydate = new Date().toISOString();
   console.log("Value of mydate: ", mydate);
   var d = new Date();
@@ -39,7 +39,7 @@ app.post('/bininfo/:ID', function (req,res,next) {
   d.setDate(d.getDate() - 1);
   console.log("Value of d: ", d);
   var datamap = new Map();
-  trashcapacities.find({_id:req.params.ID})
+  trashcapacities.find({_id:req.params.ID1})
   .exec()
   .then(result => {
     console.log("Response sent after fetching is : ", result[0].capacity);
@@ -77,9 +77,9 @@ app.post('/bininfo/:ID', function (req,res,next) {
 //         });
 // });
 });
-app.post('/binheightinfo', function(req, res, next){
+app.post('/binheightinfo/:ID', function(req, res, next){
 
-    trashcapacities.findOne({_id:req.body.id}).then((app)=> {
+    trashcapacities.findOne({_id:req.params.ID}).then((app)=> {
         console.log("\nNumber of applied jobs: " + app);
         console.log("result : "+ app.capacity[app.capacity.length-1].height );
         let maxHeight = app.capacity[app.capacity.length-1].height

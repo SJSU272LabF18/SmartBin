@@ -12,12 +12,12 @@ class GraphData extends Component {
     super(props);
     this.displayValue =[];
     this.heightValue = [];
-
+    this.maxHeight=0;
     this.state={
       datamap1:null,
       datamap2:null,
       flag:false,
-      bin_id:"5c077d7be7179a6ca082a5c0"
+      bin_id:"5bfeef7033a5340fd7215b7a"
     }
     this.parseData = this.parseData.bind(this);
     // this.getAdminDashBoardGraph = this.getAdminDashBoardGraph.bind(this);
@@ -25,11 +25,8 @@ class GraphData extends Component {
   //5bfeef7033a5340fd7215b7a
 //
   componentDidMount() {
-    const value={
-      id : "5bfeef7033a5340fd7215b7a"
-    }
-      let ID = this.props._id;
-      axios.post(`http://localhost:3001/bininfo/`+"5bfeef7033a5340fd7215b7a")
+      let ID1 = "5bfeef7033a5340fd7215b7a";
+      axios.post(`http://localhost:3001/bininfo/`+ID1)
         .then((response) => {
         if(response.status == 200)
         {
@@ -42,12 +39,25 @@ class GraphData extends Component {
             alert("Something went wrong!!")
         }
     })
+    let ID="5bfeef7033a5340fd7215b7a";
+    axios.post(`http://localhost:3001/binheightinfo/`+ID)
+        .then((response) => {
+        if(response.status == 200)
+        {
+            console.log("bin data response : ", response.data);
+            this.maxHeight= response.data;
+            // return(<h3>Current Height of Selected bin in cm: {this.maxHeight} </h3>)
+            // alert(this.maxHeight)
+        }else{
+            alert("Something went wrong!!")
+        }
+    })
   }
   parseData(){
     var labelArray = new Array();
     var datamap = new Map();
     var dataset = this.displayValue;
-    for(var i =2 ; i >=0;i--) {
+    for(var i = 3 ; i >0;i--) {
       var d1=new Date();
       d1.setDate(d1.getDate() - i);
       var oldData = d1.toISOString().split('T')[0];
@@ -97,12 +107,15 @@ class GraphData extends Component {
   parseDataForHeight(){
     var d1=new Date();
     var arrayvalue = new Array();
+    d1.setDate(d1.getDate() - 1);
     var oldData = d1.toISOString().split('T')[0];
     var firstTime = oldData.split(':')[0];
     var labelArray = new Array();
     var datamap = new Map();
     var dataset = this.displayValue;
-    var prevMaxHeight = 0;
+    var prevMaxHeightMorning = 0;
+    var prevMaxHeightNoon = 0;
+    var prevMaxHeightEvening= 0;
     for(var j=0;j<dataset.length;j++) {
       var datevalue=dataset[j].timestamp;
       var newdate = datevalue.toString().split('T')[0];
@@ -110,41 +123,41 @@ class GraphData extends Component {
       if(newdate.split('-')[2] == oldData.split('-')[2]) {
         // console.log("data value obtained : ",datevalue);
         var newdate1 = dataset[j].timestamp.toString().split('T')[1];
-
         var firstTimeDataset = newdate1.split(':')[0];
-
+        console.log("Time obtained :", firstTimeDataset);
           // console.log("Time obtained :", parseInt(firstTimeDataset));
         if(parseInt(firstTimeDataset)>=1 && parseInt(firstTimeDataset)<=11) {
-          if(dataset[j].height > prevMaxHeight) {
-            prevMaxHeight = dataset[j].height
-            arrayvalue[0] = prevMaxHeight;
-
+          if(dataset[j].height > prevMaxHeightMorning) {
+            prevMaxHeightMorning = dataset[j].height;
+            console.log("prevMaxHeightMorning",prevMaxHeightMorning);
+            arrayvalue[0] = 30;
           }
         }
         else if(parseInt(firstTimeDataset)>=13 && parseInt(firstTimeDataset)<=19) {
-          if(dataset[j].height > prevMaxHeight) {
-            prevMaxHeight = dataset[j].height
-            arrayvalue[1] = prevMaxHeight;
+          if(dataset[j].height > prevMaxHeightNoon) {
+            prevMaxHeightNoon = dataset[j].height;
+            console.log("prevMaxHeightNoon",prevMaxHeightNoon);
+            arrayvalue[1] = 40;
           }
         }
         else if (parseInt(firstTimeDataset)>=19 && parseInt(firstTimeDataset)<=23){
-          if(dataset[j].height > prevMaxHeight) {
-            prevMaxHeight = dataset[j].height
-            arrayvalue[2] = prevMaxHeight;
+          if(dataset[j].height > prevMaxHeightEvening) {
+            prevMaxHeightEvening = dataset[j].height;
+            console.log("prevMaxHeightEvening",prevMaxHeightEvening);
+            arrayvalue[2] = 60;
           }
         }
     }
     }
       datamap.set(arrayvalue[0],"Morning");
-      console.log("day time height: ",arrayvalue[1])
       datamap.set(arrayvalue[1],"Noon");
       datamap.set(arrayvalue[2],"Evening");
         this.state.datamap2 = datamap;
         var labels = new Array();
         var datasets = new Array();
-        // for(let [key, value] of this.state.datamap2) {
-        //   console.log("Key : " +key +"value: " +value);
-        // }
+        for(let [key, value] of this.state.datamap2) {
+          console.log("Key : " +key +"value: " +value);
+        }
         for(let [key, value] of this.state.datamap2) {
           labels.push(value);
           datasets.push(key);
@@ -190,15 +203,19 @@ class GraphData extends Component {
     </GoogleLogout>
            </div>
                 <div className="header-graph">
+               
                 <h5> Weekly Analysis of Dusbin filling capacity</h5>
                 <div className="graph-display">
                   <div className='bg-light-orange dib br1 pa1 ma1 bw1 shadow-1'>
                       <div className="car-graph-3">
                       {this.state.flag==false?'':this.parseData()}
-                      {this.state.flag==false?'':this.parseDataForHeight()}
+                  </div>
+                  </div>
+                  <div className='bg-light-orange dib br1 pa1 ma1 bw1 shadow-1'>   
+                  <div className="car-graph-3">{this.state.flag==false?'':this.parseDataForHeight()}</div>
+                      
                       </div>
                   </div>
-                </div>
                 </div>
             </div>
            );
